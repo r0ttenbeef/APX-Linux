@@ -1,0 +1,11 @@
+---
+- name: TMUX | Copy the tmux.conf file to archlinux box
+  copy:
+    src: "{{ role_path }}/files/tmux.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.tmux.conf"
+
+- name: TMUX | Clone tmux-themepack repository
+  git:
+    repo: https://github.com/jimeh/tmux-themepack.git
+    dest: "{{ ansible_facts['env']['HOME'] }}/.tmux/plugins/tmux-themepack"
+    clone: yes

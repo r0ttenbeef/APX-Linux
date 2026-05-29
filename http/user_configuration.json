@@ -1,0 +1,137 @@
+{
+    "app_config": {
+        "audio_config": {
+            "audio": "pulseaudio"
+        },
+        "bluetooth_config": {
+            "enabled": false
+        },
+        "fonts_config": {
+            "fonts": [
+                "noto-fonts",
+                "noto-fonts-emoji",
+                "noto-fonts-cjk",
+                "ttf-liberation",
+                "ttf-dejavu"
+            ]
+        }
+    },
+    "archinstall-language": "English",
+    "auth_config": {},
+    "bootloader_config": {
+        "bootloader": "Grub",
+        "removable": false,
+        "uki": false
+    },
+    "custom_commands": [],
+    "disk_config": {
+        "btrfs_options": {
+            "snapshot_config": null
+        },
+        "config_type": "default_layout",
+        "device_modifications": [
+            {
+                "device": "/dev/vda",
+                "partitions": [
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [
+                            "boot"
+                        ],
+                        "fs_type": "fat32",
+                        "mount_options": [],
+                        "mountpoint": "/boot",
+                        "obj_id": "8a3d684d-2b08-4fc3-845d-e5288419b9c2",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "GiB",
+                            "value": 1
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "MiB",
+                            "value": 1
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    },
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [],
+                        "fs_type": "ext4",
+                        "mount_options": [],
+                        "mountpoint": "/",
+                        "obj_id": "afbbee70-dfad-48f0-82e2-2f68e0965d6a",
+                        "size": { "sector_size": { "unit": "B", "value": 512 }, "unit": "GiB", "value": 13 },
+                        "start": { "sector_size": { "unit": "B", "value": 512 }, "unit": "MiB", "value": 1025 },
+                        "status": "create",
+                        "type": "primary"
+                    }
+                ],
+                "wipe": true
+            }
+        ]
+    },
+    "hostname": "apx-linux",
+    "kernels": [
+        "linux-lts"
+    ],
+    "locale_config": {
+        "kb_layout": "us",
+        "sys_enc": "UTF-8",
+        "sys_lang": "en_US.UTF-8"
+    },
+    "mirror_config": {
+        "custom_repositories": [],
+        "custom_servers": [],
+        "mirror_regions": {
+            "Worldwide": []
+        },
+        "optional_repositories": []
+    },
+    "network_config": {
+        "type": "iso"
+    },
+    "ntp": true,
+    "packages": [
+        "vim",
+        "sudo",
+        "openssh",
+        "python"
+    ],
+    "pacman_config": {
+        "color": true,
+        "parallel_downloads": 5
+    },
+    "profile_config": {
+        "gfx_driver": "All open-source",
+        "greeter": "lightdm-gtk-greeter",
+        "profile": {
+            "custom_settings": {
+                "Xfce4": {}
+            },
+            "details": [
+                "Xfce4"
+            ],
+            "main": "Desktop"
+        }
+    },
+    "script": null,
+    "services": [
+        "sshd"
+    ],
+    "swap": {
+        "algorithm": "zstd",
+        "enabled": false
+    },
+    "timezone": "UTC",
+    "version": "4.3"
+}

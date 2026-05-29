@@ -1,0 +1,73 @@
+" ============================================================================
+" 1. General Settings
+" ============================================================================
+
+" Set compatibility to Vim only (disable vi compatibility)
+set nocompatible
+
+" Auto text wrapping
+set wrap
+
+" Encoding
+set encoding=utf-8
+
+" Show line numbers
+set number
+
+" Always show the status line
+set laststatus=2
+
+" Indent width (4 spaces)
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+" Colorscheme
+colorscheme default
+
+" Visual command autocomplete menu
+set wildmenu
+
+
+" ============================================================================
+" 2. Plugin Management (vim-plug)
+" ============================================================================
+
+call plug#begin('~/.vim/plugged')
+
+" Autocomplete plugin (similar to VSCode)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Go language support
+Plug 'fatih/vim-go', { 'for': 'go' }
+
+" Status line themes and enhancements
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
+
+
+" ============================================================================
+" 3. Plugin Configurations & Keymaps
+" ============================================================================
+
+" Custom command to force Prettier formatting
+command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
+
+" CoC UI Color Customizations
+highlight CocFloating ctermfg=white ctermbg=black
+highlight CocErrorFloat ctermfg=red ctermbg=black
+highlight CocMenuSel ctermfg=white ctermbg=blue
+
+" Make <CR> (Enter) accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Airline Status Bar Settings
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'ravenpower'

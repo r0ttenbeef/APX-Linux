@@ -1,30 +1,131 @@
-# Archlinux-PentestBox
-Convert a basic installation of Archlinux to be used for security and penetration testing using ansible playbooks, So it will reconfigure the Desktop Environment of Archlinux, Installaing packages, Change themes, etc.
+# APX - ArchLinux Penetration-Testing eXtended
+
+APX is a minimal, performance-focused Arch Linux distribution tailored for penetration testing, offensive security workflows, and advanced research environments.
+
+Built on top of Arch Linux with automation-first principles, APX aims to provide a reproducible, lightweight, and customizable security workstation optimized for virtualized environments.
+
+![APX Wallpaper](files/wallpaper.png)
+
+---
+
+## Features
+
+* Minimal and clean XFCE desktop environment
+* Lightweight design optimized for long working sessions
+* Arch Linux rolling-release base
+* BlackArch repository integration
+* Automated image builds using Packer
+* Infrastructure-as-Code provisioning with Ansible
+* Virtual machine optimized (QEMU/KVM)
+* Modern Unix commands and tools
+* Offensive security and research focused tooling
+* Reproducible builds and deployment pipeline
+
+---
+
+## Project Goals
+
+APX is designed to provide:
+
+* A stable penetration testing environment
+* Fast deployment inside virtual machines
+* Reproducible infrastructure and configurations
+* Minimal resource consumption
+* Long-term maintainability
+* Flexible customization for researchers and red teams
+
+Unlike traditional penetration testing distributions, APX focuses on simplicity, automation, and transparency rather than shipping thousands of preinstalled tools by default.
+
+---
+
+## Tech Stack
+
+| Component             | Technology      |
+| --------------------- | --------------- |
+| Base Distribution     | Arch Linux      |
+| Desktop Environment   | XFCE            |
+| Build Automation      | Packer          |
+| Provisioning          | Ansible         |
+| Virtualization        | QEMU/KVM        |
+| Filesystem            | EXT4            |
+| Bootloader            | GRUB            |
+| Repository Extensions | BlackArch + AUR |
+
+---
+
+## Build Pipeline
+
+The APX build process is fully automated:
+
+```text
+Packer
+   ↓
+Arch Installation
+   ↓
+System Provisioning
+   ↓
+Ansible Configuration
+   ↓
+Tool Installation
+   ↓
+Image Cleanup
+   ↓
+Final QCOW2 Image
+```
+
+---
+
+## Current Status
+
+APX is currently under active development.
+
+Development To-Do list:
+
+* Support for (VMWare - VBox)
+* Support build on (Fedora , Arch)
+* Cleanup process (Remove packer user and create an already identified user)
+
+---
 
 ## Requirements
 
-You need to have an already installed archlinux box with **XFCE** desktop environment, This blog can help with installing Archlinux distro https://r0ttenbeef.github.io/Custom-Secure-Penetration-Testing-Arch-Linux-Installtion/
-So it will convert it from this:
+Recommended host environment:
 
-![image](https://github.com/r0ttenbeef/Archlinux-PentestBox/assets/48027449/ba59246d-b454-4ba1-ac28-77a6e379988a)
+* Linux host system
+* QEMU/KVM support
+* Hardware virtualization enabled
+* Minimum 4 CPU cores
+* Minimum 8 GB RAM
+* At least 40 GB free disk space
 
-to this with installed required tools for security testing
+---
 
-![image](https://github.com/r0ttenbeef/Archlinux-PentestBox/assets/48027449/8cbeb63a-c77c-4f5c-98a4-e515b9e76b45)
-
-## Modify the playbook
-
-- In `hosts.ini` file you should add the machine ip address below `arch_box` section and define the ssh configurations.
-- You can add or remove tools you don't want to be installed from `group_vars/all.yml` like add packages name or add firefox browser plugins.
-
-## Initiate the installation
-
-- After identifying your host and configurations, The playbook should be ready to start.
+## Building APX
 
 ```bash
-ansible-playbook start.yml -i hosts.ini --ask-become-pass
+git clone https://github.com/r0ttenbeef/APX.git
+
+cd APX-Linux
+
+sudo ./Initiate_APX_Build.sh -u <Current_Host_User> -v kvm -s 25
 ```
 
-## Apply vim installed plugins
+---
 
-- After playbooks finishes the tasks, Open vim and type `:PlugUpdate` to apply installed plugins.
+## Disclaimer
+
+APX is intended for:
+
+* authorized penetration testing
+* security research
+* malware analysis
+* educational purposes
+* lab environments
+
+Users are responsible for complying with local laws and regulations.
+
+---
+
+## License
+
+MIT License

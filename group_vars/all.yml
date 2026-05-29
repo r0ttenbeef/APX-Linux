@@ -3,7 +3,6 @@ required_packages:
   - firefox
   - tmux
   - vim
-  - tilix
   - obsidian
   - keepassxc
   - python-pip
@@ -12,9 +11,11 @@ required_packages:
   - npm
   - nodejs
   - bat 
-  - exa
+  - eza
   - grc
   - curlie
+  - duf
+  - tldr
   - tree
   - flameshot
   - zsh
@@ -30,11 +31,11 @@ required_packages:
 aur_packages:
   - plata-theme-bin
   - visual-studio-code-bin
+  - tilix
 
 pentesting_packages:
   # Network
   - nmap
-  - gnu-netcat
   - wireshark-qt
   - whois
   - bind

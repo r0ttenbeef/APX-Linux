@@ -1,0 +1,81 @@
+---
+- name: XFCE | Activate sudo password feedback
+  lineinfile:
+    dest: /etc/sudoers
+    line: "Defaults env_reset,pwfeedback"
+    validate: 'visudo -cf %s'
+  become: yes
+  become_user: root
+
+- name: XFCE | Download Marwaita icon theme
+  unarchive:
+    src: https://github.com/r0ttenbeef/APX-Linux/releases/download/APX-Files/Marwaita-Icons-Remix-1.2.3.tar.gz
+    dest: /dev/shm/
+    remote_src: yes
+
+- name: XFCE | Install downloaded icons
+  copy:
+    src: "/dev/shm/Marwaita-Icons-Remix-1.2.3"
+    dest: "/usr/share/icons"
+    remote_src: yes
+  become: yes
+
+- name: XFCE | Find directories starting with Marwaita
+  find:
+    paths: "/dev/shm/Marwaita-Icons-Remix-1.2.3"
+    file_type: directory
+    patterns: "Marwaita*"
+  register: found_icons
+
+- name: XFCE | Install matching Marwaita icons
+  copy:
+    src: "{{ item.path }}/"
+    dest: "/usr/share/icons/{{ item.path | basename }}"
+    remote_src: yes
+  loop: "{{ found_icons.files }}"
+  become: yes
+
+- name: XFCE | Transfer desktop wallpaper
+  copy:
+    src: "{{ role_path }}/files/wallpaper.png"
+    dest: "/usr/share/backgrounds/xfce/wallpaper.png"
+  become: yes
+
+- name: XFCE | Create htop directory
+  file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/htop"
+    state: directory
+
+- name: XFCE | Transfer htop RC file
+  copy:
+    src: "{{ role_path }}/files/htoprc"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/htop/htoprc"
+
+- name: XFCE | Transfer lightdm configurations file
+  copy:
+    src: "{{ role_path }}/files/lightdm-gtk-greeter.conf"
+    dest: "/etc/lightdm/lightdm-gtk-greeter.conf"
+  become: yes
+
+- name: XFCE | Kill xfce panel process to prevent configurations overwriting
+  shell: killall xfce4-panel
+
+- name: XFCE | Delete old xfce configurations of xfce4-panel
+  file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/xfce4/{{ item.dir }}"
+    state: absent
+  loop:
+    - { dir: "panel" }
+    - { dir: "xfconf" }
+
+- name: XFCE | Remove ristretto package
+  pacman:
+    name: ristretto
+    state: absent
+  become: yes
+
+- name: XFCE | Transfer xfce configurations
+  copy:
+    src: "{{ role_path }}/files/xfce4"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/"
+    mode: 0755

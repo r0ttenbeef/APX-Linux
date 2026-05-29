@@ -1,0 +1,37 @@
+---
+- name: AUR | Clone the YAY AUR package manager repository
+  git:
+    repo: https://aur.archlinux.org/yay.git
+    dest: /dev/shm/yay
+    clone: yes
+
+- name: AUR | Install base-devel tools required for building AUR packages
+  pacman:
+    name: base-devel
+    state: present
+    update_cache: yes
+  become: true
+
+- name: AUR | Check if YAY AUR manager is already installed
+  command: which yay
+  register: yay_check
+  failed_when: false
+  changed_when: false
+
+- name: AUR | Installing YAY AUR manager
+  command: makepkg -si --noconfirm 
+  args:
+    chdir: /dev/shm/yay
+  when: yay_check.rc != 0
+
+- name: AUR | Install required AUR packages
+  command: 'yay -S {{ item }} --noconfirm --noprogressbar --cleanafter --noredownload --norebuild --removemake --needed'
+  loop: '{{ aur_packages }}'
+  
+- name: AUR | Clean packages chache
+  command: 'yay -Scc --noconfirm'
+
+- name: AUR | Delete the YAY repository directory
+  file:
+    path: /dev/shm/yay
+    state: absent

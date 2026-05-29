@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Flameshot
+Comment=Powerful yet simple to use screenshot software.
+Exec=/usr/bin/flameshot gui
+Icon=com.github.mohelm97.screenrecorder
+Path=
+Terminal=false
+StartupNotify=false

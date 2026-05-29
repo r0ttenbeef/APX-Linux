@@ -1,0 +1,42 @@
+---
+- name: VIM | Customize the tab width
+  lineinfile:
+    dest: /etc/vimrc
+    line: "{{ item.line }}"
+  loop:
+    - { line: "set tabstop=4" }
+    - { line: "set shiftwidth=4" }
+    - { line: "set expandtab" }
+  become: yes
+
+- name: VIM | Create autoload and plugged directory
+  file:
+    path: "{{ ansible_facts['env']['HOME'] }}/{{ item.path }}"
+    state: directory
+  loop:
+    - { path: ".vim/autoload" }
+    - { path: ".vim/plugged" }
+
+- name: VIM | Install vim plug manager
+  get_url:
+    url: "https://github.com/junegunn/vim-plug/raw/master/plug.vim"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.vim/autoload/plug.vim"
+
+- name: VIM | Transfer vim RC file
+  copy:
+    src: "{{ role_path }}/files/vimrc"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.vimrc"
+
+- name: VIM | Install plugins
+  git:
+    repo: "{{ item.url }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.vim/plugged/{{ item.name }}"
+    update: yes
+    clone: yes
+  loop:
+    - { name: "vim-airline", url: "https://github.com/vim-airline/vim-airline.git" }
+    - { name: "vim-airline-themes", url: "https://github.com/vim-airline/vim-airline-themes.git" }
+
+- name: VIM | Apply installed plugins
+  command: vim +PlugInstall +qall
+  changed_when: true

@@ -1,0 +1,47 @@
+---
+- name: Packages Installation | Add blackarch pentesting repository to archlinux
+  get_url:
+    url: "https://blackarch.org/strap.sh"
+    dest: "/dev/shm/strap.sh"
+
+- name: Packages Installation | Change strap.sh script permission before executing
+  file:
+    path: "/dev/shm/strap.sh"
+    mode: "0750"
+
+- name: Packages Installation | Check if BlackArch repository is already added
+  ansible.builtin.command: grep -q '^\[blackarch\]' /etc/pacman.conf
+  register: blackarch_check
+  failed_when: false
+  changed_when: false
+
+- name: Packages Installation | Start adding blackarch repository to archlinux by running strap.sh
+  command: /dev/shm/strap.sh
+  become: yes
+  when: blackarch_check.rc != 0
+
+- name: Packages Installation | Update repository
+  pacman:
+    update_cache: yes
+  become: yes
+
+- name: Packages Installation | Install some required packages
+  pacman:
+    name: "{{ required_packages }}"
+    state: installed
+  become: yes
+  register: packageresult
+  until: packageresult is success
+  retries: 10
+  delay: 10
+
+- name: Packages Installation | Install penetration testing packages
+  pacman:
+    name: "{{ pentesting_packages }}"
+    state: installed
+  become: yes
+  register: packageresult
+  until: packageresult is success
+  retries: 10
+  delay: 10
+

@@ -1,0 +1,80 @@
+---
+- name: ZSH | Download oh-my-zsh installation script
+  get_url:
+    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh "
+    dest: "/dev/shm/ohmyzsh_install.sh"
+
+- name: ZSH | Check if oh-my-zsh directory exists
+  stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.oh-my-zsh"
+  register: ohmyzsh
+
+- name: ZSH | Install oh-my-zsh
+  command: sh /dev/shm/ohmyzsh_install.sh --unattended
+  when: not ohmyzsh.stat.exists
+
+- name: ZSH | Copy the zshrc file to the default path
+  copy:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
+
+- name: ZSH | Make zsh default shell
+  shell: "chsh -s $(which zsh) {{ ansible_user }}"
+  become: yes
+
+- name: ZSH | Check if oh-my-posh is already installed
+  ansible.builtin.command: which oh-my-posh
+  register: ohmyposh_check
+  failed_when: false
+  changed_when: false
+
+- name: ZSH | Download oh-my-posh installation script
+  get_url:
+    url: "https://ohmyposh.dev/install.sh"
+    dest: "/dev/shm/ohmyposh.sh"
+  when: ohmyposh_check.rc != 0
+
+- name: ZSH | Install oh-my-posh
+  command: bash /dev/shm/ohmyposh.sh
+  when: ohmyposh_check.rc != 0
+
+- name: ZSH | Create oh-my-posh themes directory
+  file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.poshthemes"
+    state: directory
+
+- name: ZSH | Apply APX prompt theme
+  copy:
+    src: "{{ role_path }}/files/apx_prompt.omp.json"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.poshthemes/apx_prompt.omp.json"
+
+- name: ZSH | Create directory for NerdFont fonts
+  file:
+    path: "/usr/share/fonts/Meslo\ LGM\ NF"
+    state: directory
+  become: yes
+
+- name: ZSH | Create directory for JetBrains fonts
+  file:
+    path: "/usr/share/fonts/JetBrains"
+    state: directory
+  become: yes
+
+- name: ZSH | Install NerdFont (Meslo) for emojie fixes
+  unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.tar.xz"
+    dest: "/usr/share/fonts/Meslo\ LGM\ NF"
+    remote_src: yes
+  become: yes
+
+- name: ZSH | Install JetBrains fonts
+  unarchive:
+    src: "https://github.com/r0ttenbeef/APX-Linux/releases/download/APX-Files/JetBrains_Mono.zip"
+    dest: "/usr/share/fonts/JetBrains"
+    remote_src: yes
+  become: yes
+
+- name: ZSH | Rebuild system font cache
+  ansible.builtin.command: fc-cache -fv
+  become: yes
+  changed_when: true
