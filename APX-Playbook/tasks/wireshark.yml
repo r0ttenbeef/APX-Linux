@@ -1,19 +1,24 @@
 # Apply wireshark profile for user
-
 - name: Wireshark | Create required directory in user config
   file:
-    path: "{{ ansible_facts['env']['HOME'] }}/.config/wireshark/profiles"
+    path: "/home/{{ deploy_user }}/.config/wireshark/profiles"
     state: directory
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: Wireshark | Transfer profile to user
   unarchive:
     src: "{{ role_path }}/files/wireshark/wireshark_profile.zip"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.config/wireshark/profiles"
+    dest: "/home/{{ deploy_user }}/.config/wireshark/profiles"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: Wireshark | Import custom profile instead of default for user  
   copy:
     src: "{{ role_path }}/files/wireshark/recent_common"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.config/wireshark/recent_common"
+    dest: "/home/{{ deploy_user }}/.config/wireshark/recent_common"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 # Apply wireshark profile for root
 

@@ -3,15 +3,21 @@
     path: "{{ item.opath }}"
     state: directory
   loop:
-    - { opath: "{{ ansible_facts['env']['HOME'] }}/Documents/Notes" }
-    - { opath: "{{ ansible_facts['env']['HOME'] }}/.config/obsidian" }
+    - { opath: "/home/{{ deploy_user }}/Documents/Notes" }
+    - { opath: "/home/{{ deploy_user }}/.config/obsidian" }
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: Obsidian | Move obsidian.json to config path
   template:
     src: "obsidian.json.j2"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.config/obsidian/obsidian.json"
+    dest: "/home/{{ deploy_user }}/.config/obsidian/obsidian.json"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: Obsidian | Transfer the configuration files
   copy:
     src: "{{ role_path }}/files/obsidian/"
-    dest: "{{ ansible_facts['env']['HOME'] }}/Documents/Notes/.obsidian"
+    dest: "/home/{{ deploy_user }}/Documents/Notes/.obsidian"
+  become: yes
+  become_user: "{{ deploy_user }}"

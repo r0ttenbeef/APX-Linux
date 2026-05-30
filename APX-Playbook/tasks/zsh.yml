@@ -6,20 +6,26 @@
 
 - name: ZSH | Check if oh-my-zsh directory exists
   stat:
-    path: "{{ ansible_facts['env']['HOME'] }}/.oh-my-zsh"
+    path: "/home/{{ deploy_user }}/.oh-my-zsh"
   register: ohmyzsh
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Install oh-my-zsh
   command: sh /dev/shm/ohmyzsh_install.sh --unattended
   when: not ohmyzsh.stat.exists
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Copy the zshrc file to the default path
   copy:
     src: "{{ role_path }}/files/zshrc"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
+    dest: "/home/{{ deploy_user }}/.zshrc"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Make zsh default shell
-  shell: "chsh -s $(which zsh) {{ ansible_user }}"
+  shell: "chsh -s $(which zsh) {{ deploy_user }}"
   become: yes
 
 - name: ZSH | Check if oh-my-posh is already installed
@@ -27,26 +33,36 @@
   register: ohmyposh_check
   failed_when: false
   changed_when: false
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Download oh-my-posh installation script
   get_url:
     url: "https://ohmyposh.dev/install.sh"
     dest: "/dev/shm/ohmyposh.sh"
   when: ohmyposh_check.rc != 0
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Install oh-my-posh
   command: bash /dev/shm/ohmyposh.sh
   when: ohmyposh_check.rc != 0
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Create oh-my-posh themes directory
   file:
-    path: "{{ ansible_facts['env']['HOME'] }}/.poshthemes"
+    path: "/home/{{ deploy_user }}/.poshthemes"
     state: directory
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Apply APX prompt theme
   copy:
     src: "{{ role_path }}/files/apx_prompt.omp.json"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.poshthemes/apx_prompt.omp.json"
+    dest: "/home/{{ deploy_user }}/.poshthemes/apx_prompt.omp.json"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: ZSH | Create directory for NerdFont fonts
   file:

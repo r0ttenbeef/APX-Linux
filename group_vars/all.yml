@@ -1,4 +1,7 @@
 ---
+deploy_user: testuser #Note: In a production environment, use a another username and consider using Ansible Vault to encrypt sensitive data.
+deploy_user_password: $6$4oSPJWAgahz42lRi$mXty2Bt4xtaPrjnwDLoOjLUa0sXzqNJy2tLRXEV./3khISzATiG2CSPApJ.dTUwB63WMaybdH59EPWngLt0z3.
+ #(password123) Note: In a production environment, use a secure password and consider using Ansible Vault to encrypt sensitive data.
 required_packages:
   - firefox
   - tmux

@@ -1,5 +1,8 @@
 ---
 # tasks file for APX
+- name: Create deployment user
+  include_tasks: create_user.yml
+  
 - name: Install pentesting tools and packages to archlinux
   include_tasks: packages.yml
   when: ansible_facts.distribution == 'Archlinux'

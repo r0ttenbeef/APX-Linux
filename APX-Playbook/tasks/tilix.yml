@@ -3,6 +3,10 @@
   copy:
     src: "{{ role_path }}/files/tilix.dconf"
     dest: "/dev/shm/tilix.dconf"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: Tilix | Load tilix dconf file 
   shell: dconf load /com/gexperts/Tilix/ < /dev/shm/tilix.dconf
+  become: yes
+  become_user: "{{ deploy_user }}"

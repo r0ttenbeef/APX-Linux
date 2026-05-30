@@ -11,32 +11,42 @@
 
 - name: VIM | Create autoload and plugged directory
   file:
-    path: "{{ ansible_facts['env']['HOME'] }}/{{ item.path }}"
+    path: "/home/{{ deploy_user }}/{{ item.path }}"
     state: directory
   loop:
     - { path: ".vim/autoload" }
     - { path: ".vim/plugged" }
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: VIM | Install vim plug manager
   get_url:
     url: "https://github.com/junegunn/vim-plug/raw/master/plug.vim"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.vim/autoload/plug.vim"
+    dest: "/home/{{ deploy_user }}/.vim/autoload/plug.vim"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: VIM | Transfer vim RC file
   copy:
     src: "{{ role_path }}/files/vimrc"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.vimrc"
+    dest: "/home/{{ deploy_user }}/.vimrc"
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: VIM | Install plugins
   git:
     repo: "{{ item.url }}"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.vim/plugged/{{ item.name }}"
+    dest: "/home/{{ deploy_user }}/.vim/plugged/{{ item.name }}"
     update: yes
     clone: yes
   loop:
     - { name: "vim-airline", url: "https://github.com/vim-airline/vim-airline.git" }
     - { name: "vim-airline-themes", url: "https://github.com/vim-airline/vim-airline-themes.git" }
+  become: yes
+  become_user: "{{ deploy_user }}"
 
 - name: VIM | Apply installed plugins
   command: vim +PlugInstall +qall
   changed_when: true
+  become: yes
+  become_user: "{{ deploy_user }}"
