@@ -103,7 +103,7 @@ Recommended host environment:
 ## Building APX
 
 ```bash
-git clone https://github.com/r0ttenbeef/APX.git
+git clone https://github.com/r0ttenbeef/APX-Linux.git
 
 cd APX-Linux
 
