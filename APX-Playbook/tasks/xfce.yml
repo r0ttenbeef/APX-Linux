@@ -59,6 +59,7 @@
 
 - name: XFCE | Kill xfce panel process to prevent configurations overwriting
   shell: killall xfce4-panel
+  ignore_errors: true
 
 - name: XFCE | Delete old xfce configurations of xfce4-panel
   file:
