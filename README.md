@@ -88,11 +88,37 @@ Recommended host environment:
 
 ## Building APX
 
+- Add your user and encrypted password in `APX-Playbook/group_vars/all.yml` that you will be use in APX system
+
+```yml
+deploy_user: testuser
+deploy_user_password: $6$4oSPJWAgahz42lRi$mXty2Bt4xtaPrjnwDLoOjLUa0sXzqNJy2tLRXEV./3khISzATiG2CSPApJ.dTUwB63WMaybdH59EPWngLt0z3.
+```
+
+- Add the root encrypted password in `http/user_credentials.json` file, The current password: **change_me_later** 
+
+```json
+"root_enc_password": "$y$j9T$wnI9CIQjL6tWJBRgbfTVq/$SeheIrt4tVATRm2ttiNXqT5aIdylPUOAlQzBncHrfn1"
+```
+
+> Don't modify the encrypted password of packer user as this is the user used by packer and ansible, It's recommended to completly remove the user packer later.
+
+- Use `Initiate_APX_Build.sh` script to start your build
+
+
 ```bash
-git clone https://github.com/r0ttenbeef/APX-Linux.git
+sudo ./Initiate_APX_Build.sh -h
 
-cd APX-Linux
+---
+Usage: Initiate_APX_Build.sh [OPTIONS]
 
+Options:
+  -u, --user <username>          Specify your current host username (Required)
+  -v, --hypervisor <hypervisor>  Specify the hypervisor you will use (kvm,vbox,vmware)
+  -s, --disk-size <SIZE_GB>      Specify the disk size of the generated image in GB (EX: 10)
+  -h, --help                     Display this help menu and exit
+---
+# Example command
 sudo ./Initiate_APX_Build.sh -u <Current_Host_User> -v kvm -s 25
 ```
 
