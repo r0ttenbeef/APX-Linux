@@ -97,11 +97,18 @@ InstallKVMPackages() {
 ConfigureKVM() { 
     if id "$1" &>/dev/null; then
         print_prog "Adding user to KVM groups"
-        usermod -aG libvirt,kvm "$1"
+        if ! id -nG "$1" | grep -qw "libvirt"; then
+            print_prog "Adding user to libvirt group"
+            usermod -aG libvirt "$1"
+        fi
+        if ! id -nG "$1" | grep -qw "kvm"; then
+            print_prog "Adding user to kvm group"
+            usermod -aG kvm "$1"
+        fi
         print_ok "Enabling and starting libvirtd service"
         systemctl enable --now libvirtd &> /dev/null
         systemctl start libvirtd &>/dev/null
-        print_warn "You may need to log out and back in for group changes to take effect"
+        print_warn "If you faced any issues with permissions related to KVM, please log out and log back in to apply the new group memberships."
     else
         print_err "User provided does not exist."
         exit 1
@@ -172,6 +179,27 @@ GenerateSSHKey() {
     fi
 }
 
+StartPackerBuild() {
+    packer plugins install github.com/hashicorp/ansible
+
+    size_on_archinstall=$((disk_size - 2))
+    sed -i "s/\"unit\": \"GiB\", \"value\": .[0-9]*/\"unit\": \"GiB\", \"value\": $size_on_archinstall/g" http/user_configuration.json
+
+    disk_size="${disk_size}000"
+    export PKR_VAR_disk_size=$disk_size
+
+    packer init .
+    PACKER_LOG_PATH=packer.log packer build apx.pkr.hcl
+
+    if [ $? -eq 0 ]; then
+        chown -R "$1":"$current_user" output
+        print_ok "Packer build completed successfully"
+    else
+        print_err "Packer build failed, check packer.log for details"
+        exit 1
+    fi
+}
+
 HelpMenu() {
     cat << EOF
 Usage: $(basename "$0") [OPTIONS]
@@ -214,14 +242,4 @@ esac
 InstallPacker
 DownloadArch
 GenerateSSHKey
-
-packer plugins install github.com/hashicorp/ansible
-
-size_on_archinstall=$((disk_size - 2))
-sed -i "s/\"unit\": \"GiB\", \"value\": .[0-9]*/\"unit\": \"GiB\", \"value\": $size_on_archinstall/g" http/user_configuration.json
-
-disk_size="${disk_size}000"
-export PKR_VAR_disk_size=$disk_size
-
-packer init .
-PACKER_LOG_PATH=packer.log packer build apx.pkr.hcl
+StartPackerBuild "$current_user"
