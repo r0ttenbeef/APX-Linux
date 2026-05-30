@@ -25,7 +25,7 @@ source "qemu" "apx" {
   memory = 4096
   cpus   = 4
 
-  headless = true
+  headless = false
   net_device     = "virtio-net"
   disk_interface = "virtio"
   boot_wait = "3s"
