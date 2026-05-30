@@ -57,21 +57,7 @@ Unlike traditional penetration testing distributions, APX focuses on simplicity,
 
 The APX build process is fully automated:
 
-```text
-Packer
-   ↓
-Arch Installation
-   ↓
-System Provisioning
-   ↓
-Ansible Configuration
-   ↓
-Tool Installation
-   ↓
-Image Cleanup
-   ↓
-Final QCOW2 Image
-```
+![APX Pipeline](APX-Build-Diagram.jpeg)
 
 ---
 
