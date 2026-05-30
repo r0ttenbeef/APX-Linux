@@ -24,6 +24,8 @@
   pacman:
     update_cache: yes
   become: yes
+  retries: 10
+  delay: 10
 
 - name: Packages Installation | Install some required packages
   pacman:
