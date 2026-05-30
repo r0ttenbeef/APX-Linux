@@ -57,7 +57,6 @@ pentesting_packages:
   - dbeaver
  
 firefox_plugins:
-  - darkreader
   - foxyproxy-standard
   - wappalyzer
   - ip-address-and-domain-info
