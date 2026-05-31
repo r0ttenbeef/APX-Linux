@@ -33,6 +33,17 @@
     cmd: pacman -Scc --noconfirm
   become: yes
 
+- name: Clean | Disable Archlinux network connectivity ping
+  copy:
+    dest: /etc/NetworkManager/conf.d/20-connectivity.conf
+    content: |
+      [connectivity]
+      enabled=false
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
 - name: Clean | Revert sudoers file to default
   ansible.builtin.copy:
     dest: /etc/sudoers.d/01_wheel
