@@ -12,7 +12,11 @@ set wrap
 set encoding=utf-8
 
 " Show line numbers
-set number
+" set number
+
+" Highlight all matches as you type your search
+set incsearch
+set hlsearch
 
 " Always show the status line
 set laststatus=2
@@ -63,7 +67,17 @@ highlight CocMenuSel ctermfg=white ctermbg=blue
 " Make <CR> (Enter) accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+nnoremap <silent> <Esc><Esc> :noh<CR>
+
+" Use Up and Down arrow keys to navigate the CoC autocomplete dropdown
+inoremap <silent><expr> <Down> coc#pum#visible() ? coc#pum#next(1) : "\<Down>"
+inoremap <silent><expr> <Up>   coc#pum#visible() ? coc#pum#prev(1) : "\<Up>"
+
+" Left and Right arrows close the menu and move the cursor normally
+inoremap <silent><expr> <Left>  coc#pum#visible() ? coc#pum#cancel() : "\<Left>"
+inoremap <silent><expr> <Right> coc#pum#visible() ? coc#pum#cancel() : "\<Right>"
 
 " Airline Status Bar Settings
 let g:airline#extensions#tabline#formatter = 'default'
