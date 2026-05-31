@@ -7,6 +7,6 @@
   become_user: "{{ deploy_user }}"
 
 - name: Tilix | Load tilix dconf file 
-  shell: dconf load /com/gexperts/Tilix/ < /dev/shm/tilix.dconf
+  shell: dbus-run-session dconf load /com/gexperts/Tilix/ < /dev/shm/tilix.dconf
   become: yes
   become_user: "{{ deploy_user }}"
