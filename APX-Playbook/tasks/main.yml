@@ -33,3 +33,6 @@
 
 - name: Import wireshark custom profile
   include_tasks: wireshark.yml
+
+- name: Post-Deployment System Sanitization
+  include_tasks: clean.yml
