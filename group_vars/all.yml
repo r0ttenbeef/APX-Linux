@@ -30,6 +30,7 @@ required_packages:
   - viewnior
   - atril
   - remmina
+  - zsh-syntax-highlighting
 
 aur_packages:
   - plata-theme-bin

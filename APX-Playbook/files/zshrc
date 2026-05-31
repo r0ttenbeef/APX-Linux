@@ -3,9 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-source $HOME/.apx_zsh_highlight.sh
 export TERM=xterm-256color
-
 export PATH=$PATH:$HOME/.local/bin
 
 # Set name of the theme to load --- if set to "random", it will
@@ -44,6 +42,8 @@ alias yay='yay --color=auto'
 
 ## Modern unix commands aliases
 alias ls='eza -a --git --icons=always'
+alias ll='eza -alh --git --icons=always'
+alias lt='eza --tree --icons=always'
 alias dig='grc dig'
 alias whois='grc whois'
 alias nmap='grc nmap'
@@ -51,7 +51,7 @@ alias tree='tree -C -haA --du'
 alias cat='bat --paging=never --style=plain --theme=ansi'
 alias curl='curlie -A "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.7113.93 Safari/537.36"'
 alias df='duf'
-alias tldr='man'
+alias man='tldr'
 
 ## Man pages
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
@@ -69,6 +69,10 @@ plugins=(git)
 (( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]=none
 ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+source $ZSH/oh-my-zsh.sh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.apx_zsh_highlight.sh
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -130,8 +134,6 @@ DISABLE_LS_COLORS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
