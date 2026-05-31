@@ -1,5 +1,5 @@
 ---
-- name: Create User| Create the final user of deployment
+- name: Create User | Create the final user of deployment
   user:
     name: "{{ deploy_user }}"
     password: "{{ deploy_user_password }}"
@@ -9,10 +9,12 @@
     state: present
   become: true
 
-- name: Create User | Allow wheel group in sudoers
-  lineinfile:
-    dest: /etc/sudoers
-    line: "%wheel ALL=(ALL) ALL: ALL"
+- name: Create User | Allow wheel group via sudoers.d without password
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/01_wheel
+    content: "%wheel ALL=(ALL) NOPASSWD: ALL"
+    owner: root
+    group: root
+    mode: '0440'
     validate: 'visudo -cf %s'
   become: yes
-  become_user: root
