@@ -1,0 +1,49 @@
+---
+- name: Clean | Clean up the system after deployment
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_fileglob:
+    - /tmp/*
+    - /var/tmp/*
+    - /root/.ansible
+    - /home/*/.ansible
+    - /home/*/.cache
+    - /root/.cache
+    - /etc/ssh/ssh_host_*
+    - /var/log/*
+  become: yes
+
+- name: Clean | Remove D-Bus machine ID
+  file:
+    path: /var/lib/dbus/machine-id
+    state: absent
+  become: yes
+
+- name: Clean | Rotate and vacuum Journald logs
+  command:
+    cmd: "{{ item }}"
+  loop:
+    - journalctl --rotate
+    - journalctl --vacuum-time=1s
+  become: yes
+
+- name: Clean | Clear pacman package cache
+  command:
+    cmd: pacman -Scc --noconfirm
+  become: yes
+
+- name: Clean | Revert sudoers file to default
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/01_wheel
+    content: "%wheel ALL=(ALL) ALL"
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  become: yes
+
+- name: Clean | Flush filesystem buffers
+  command: sync
+
+
