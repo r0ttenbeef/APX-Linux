@@ -39,3 +39,10 @@
     src: "{{ role_path }}/files/wireshark/recent_common"
     dest: "/root/.config/wireshark/recent_common"
   become: yes
+
+- name: Wireshark | Add user to wireshark group for non-root packet capture
+  user:
+    name: "{{ deploy_user }}"
+    groups: wireshark
+    append: yes
+  become: yes
