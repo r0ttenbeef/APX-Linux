@@ -90,7 +90,7 @@
     </property>
     <property name="plugin-7" type="string" value="whiskermenu">
       <property name="button-title" type="string" value="APX Menu"/>
-      <property name="button-icon" type="string" value="crypt-of-the-necrodancer"/>
+      <property name="button-icon" type="string" value="thextech"/>
       <property name="show-button-title" type="bool" value="true"/>
       <property name="view-mode" type="int" value="0"/>
       <property name="favorites-in-recent" type="bool" value="true"/>
@@ -102,6 +102,7 @@
         <value type="string" value="com.gexperts.Tilix.desktop"/>
         <value type="string" value="org.xfce.mousepad.desktop"/>
         <value type="string" value="org.wireshark.Wireshark.desktop"/>
+        <value type="string" value="burpsuite.desktop"/>
       </property>
       <property name="recent" type="array">
         <value type="string" value="xfce-display-settings.desktop"/>
