@@ -24,6 +24,13 @@
   become: yes
   become_user: "{{ deploy_user }}"
 
+- name: ZSH | Copy zsh syntax highlighting configuration
+  copy:
+    src: "{{ role_path }}/files/apx_zsh_highlight.sh"
+    dest: "/home/{{ deploy_user }}/.apx_zsh_highlight.sh"
+  become: yes
+  become_user: "{{ deploy_user }}"
+
 - name: ZSH | Make zsh default shell
   shell: "chsh -s $(which zsh) {{ deploy_user }}"
   become: yes
