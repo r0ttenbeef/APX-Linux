@@ -182,7 +182,7 @@ GenerateSSHKey() {
 StartPackerBuild() {
     packer plugins install github.com/hashicorp/ansible
 
-    size_on_archinstall=$((disk_size - 2))
+    size_on_archinstall=$((disk_size - 4))
     sed -i "s/\"unit\": \"GiB\", \"value\": .[0-9]*/\"unit\": \"GiB\", \"value\": $size_on_archinstall/g" http/user_configuration.json
 
     disk_size="${disk_size}000"
