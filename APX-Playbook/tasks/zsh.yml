@@ -92,7 +92,7 @@
 
 - name: ZSH | Install JetBrains fonts
   unarchive:
-    src: "https://github.com/r0ttenbeef/APX-Linux/releases/download/APX-Files/JetBrains_Mono.zip"
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip"
     dest: "/usr/share/fonts/JetBrains"
     remote_src: yes
   become: yes
