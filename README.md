@@ -4,7 +4,7 @@ APX is a minimal, performance-focused Arch Linux distribution tailored for penet
 
 Built on top of Arch Linux with automation-first principles, APX aims to provide a reproducible, lightweight, and customizable security workstation optimized for virtualized environments.
 
-![APX Wallpaper](APX-Playbook/files/wallpaper.png)
+![APX Wallpaper](APX-Playbook/files/wallpaper2.jpeg)
 
 ---
 
@@ -89,6 +89,7 @@ Recommended host environment:
 ## Building APX
 
 - Add your user and encrypted password in `APX-Playbook/group_vars/all.yml` that you will be use in APX system
+  - Generate unix encrypted password using `openssl passwd -6` command
 
 ```yml
 deploy_user: testuser
