@@ -37,8 +37,8 @@
 
 - name: XFCE | Transfer desktop wallpaper
   copy:
-    src: "{{ role_path }}/files/wallpaper.png"
-    dest: "/usr/share/backgrounds/xfce/wallpaper.png"
+    src: "{{ role_path }}/files/wallpaper2.jpeg"
+    dest: "/usr/share/backgrounds/xfce/wallpaper2.jpeg"
   become: yes
 
 - name: XFCE | Create htop directory
