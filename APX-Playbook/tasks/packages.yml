@@ -15,10 +15,20 @@
   failed_when: false
   changed_when: false
 
-- name: Packages Installation | Start adding blackarch repository to archlinux by running strap.sh
-  command: /dev/shm/strap.sh
+- name: Packages Installation | Install expect package to automate the execution of strap.sh script
+  pacman:
+    name: python-pexpect
+    state: present
+    update_cache: yes
   become: yes
+
+- name: Packages Installation | Execute strap.sh script to add blackarch repository
+  expect:
+    command: "/dev/shm/strap.sh"
+    responses:
+      'Perform full system upgrade\? \(pacman -Su\) \[Yn\]:': 'y'
   when: blackarch_check.rc != 0
+  become: yes
 
 - name: Packages Installation | Update repository
   pacman:
