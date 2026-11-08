@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+  <property name="font-name" type="string" value="JetBrainsMonoNL Nerd Font Medium 10"/>
+  <property name="scrolling-unlimited" type="bool" value="true"/>
+  <property name="scrolling-bar" type="string" value="TERMINAL_SCROLLBAR_NONE"/>
+  <property name="misc-default-geometry" type="string" value="93x34"/>
+  <property name="font-allow-bold" type="bool" value="true"/>
+  <property name="misc-cursor-blinks" type="bool" value="true"/>
+  <property name="misc-cursor-shape" type="string" value="TERMINAL_CURSOR_SHAPE_UNDERLINE"/>
+  <property name="color-foreground" type="string" value="#FFFFFF"/>
+  <property name="color-background" type="string" value="#0a0a0c0c1414"/>
+  <property name="color-background-vary" type="bool" value="false"/>
+  <property name="color-cursor-foreground" type="string" value=""/>
+  <property name="color-cursor" type="string" value="#0000b716fe4a"/>
+  <property name="color-cursor-use-default" type="bool" value="false"/>
+  <property name="color-selection" type="string" value="#ffffffffffff"/>
+  <property name="color-selection-background" type="string" value="#0000270cb17d"/>
+  <property name="color-selection-use-default" type="bool" value="false"/>
+  <property name="color-bold" type="string" value=""/>
+  <property name="color-bold-use-default" type="bool" value="true"/>
+  <property name="color-palette" type="string" value="rgb(119,118,123);rgb(220,50,47);rgb(86,219,58);rgb(255,132,0);rgb(0,132,212);rgb(183,41,217);rgb(0,182,253);rgb(255,255,255);rgb(119,118,123);rgb(220,50,47);rgb(86,219,58);rgb(255,132,0);rgb(0,132,212);rgb(183,41,217);rgb(0,182,253);rgb(255,255,255)"/>
+  <property name="color-bold-is-bright" type="bool" value="true"/>
+  <property name="color-use-theme" type="bool" value="false"/>
+  <property name="tab-activity-color" type="string" value="#aa0000"/>
+  <property name="title-mode" type="string" value="TERMINAL_TITLE_HIDE"/>
+  <property name="title-initial" type="string" value="_-★ APX Terminal ★-_"/>
+</channel>
