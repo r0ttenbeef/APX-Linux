@@ -19,9 +19,6 @@
 - name: Use zsh as default shell
   include_tasks: zsh.yml
 
-- name: Configure tilix terminal
-  include_tasks: tilix.yml
-
 - name: Modify XFCE desktop environment
   include_tasks: xfce.yml
 

@@ -35,7 +35,6 @@ required_packages:
 aur_packages:
   - plata-theme-bin
   - visual-studio-code-bin
-  - tilix-git
 
 pentesting_packages:
   # Network
