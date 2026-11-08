@@ -1,4 +1,4 @@
-favorites=xfce4-mail-reader.desktop,xfce4-file-manager.desktop,com.gexperts.Tilix.desktop,org.xfce.mousepad.desktop,org.wireshark.Wireshark.desktop
+favorites=xfce4-mail-reader.desktop,xfce4-file-manager.desktop,org.xfce.mousepad.desktop,org.wireshark.Wireshark.desktop
 button-title=APX Menu
 button-icon=crypt-of-the-necrodancer
 button-single-row=false
