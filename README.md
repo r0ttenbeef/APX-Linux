@@ -4,7 +4,7 @@ APX is a minimal, performance-focused Arch Linux distribution tailored for penet
 
 Built on top of Arch Linux with automation-first principles, APX aims to provide a reproducible, lightweight, and customizable security workstation optimized for virtualized environments.
 
-![APX Wallpaper](APX-Playbook/files/wallpaper/wallpaper2.jpeg)
+![APX Wallpaper](APX-Playbook/files/wallpapers/wallpaper2.jpeg)
 
 ---
 
