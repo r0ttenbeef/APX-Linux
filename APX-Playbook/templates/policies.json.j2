@@ -1,5 +1,5 @@
 {
-  "policies":{
+  "policies": {
     "Extensions": {
       "Install": [
 {% for item in firefox_plugins %}
@@ -7,13 +7,18 @@
 {% endfor %}
       ]
     },
-
     "Homepage": {
-      "URL": "https://r0ttenbeef.github.io/apx-linux",
+      "URL": "https://r0ttenbeef.github.io/apx-homepage",
       "Locked": true,
       "StartPage": "homepage"
     },
- 
-    "DisableTelemetry":true
+
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    
+    "Preferences": {
+      "extension.activeThemeID": "nova-dusk@mozilla.org"
+    }
   }
 }
