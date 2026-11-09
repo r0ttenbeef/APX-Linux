@@ -16,6 +16,7 @@ required_packages:
   - bat 
   - eza
   - grc
+  - at
   - curlie
   - duf
   - tldr
@@ -47,6 +48,7 @@ pentesting_packages:
   - ffuf
   - wfuzz
   - seclists
+  - burpsuite
   # Windows
   - nishang
   - kerbrute
