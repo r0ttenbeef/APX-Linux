@@ -44,6 +44,21 @@
     mode: '0644'
   become: yes
 
+- name: Clean | Ensure atd service is enabled and started
+  systemd:
+    name: atd
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Clean | Schedule packer user deletion after 1 minute
+  command: > 
+    echo "userdel -r -f packer" | at now + 1 minute
+  become: yes
+
+- name: Clean | Flush filesystem buffers
+  command: sync
+
 - name: Clean | Revert sudoers file to default
   ansible.builtin.copy:
     dest: /etc/sudoers.d/01_wheel
@@ -53,8 +68,4 @@
     mode: '0440'
     validate: 'visudo -cf %s'
   become: yes
-
-- name: Clean | Flush filesystem buffers
-  command: sync
-
 
